@@ -1571,3 +1571,8 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
+
+.copyright-footer {
+    color: var(--primary-color); 
+    text-decoration: none;
+}
