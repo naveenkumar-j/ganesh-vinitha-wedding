@@ -160,31 +160,102 @@ if (musicToggle && backgroundMusic) {
     });
 }
 
-// ==================== Countdown Timer ====================
+
+// ==================== Wedding Countdown / Married Timer ====================
+
+// Wedding date: 16 October 2026, 8:45 AM
 const weddingDate = new Date(2026, 9, 16, 8, 45, 0).getTime();
 
 function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = weddingDate - now;
 
-    if (isNaN(distance) || distance < 0) {
-        ['days', 'hours', 'minutes', 'seconds'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = '0';
-        });
-        return;
+    const now = new Date().getTime();
+    const difference = weddingDate - now;
+
+    const heading = document.getElementById('countdown-heading');
+    const dateText = document.getElementById('countdown-date');
+
+    // ==================== BEFORE WEDDING ====================
+    if (difference > 0) {
+
+        heading.textContent = "We are getting married";
+        dateText.textContent = "On Friday, 16th October 2026";
+
+        const days = Math.floor(
+            difference / (1000 * 60 * 60 * 24)
+        );
+
+        const hours = Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+        const minutes = Math.floor(
+            (difference % (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+        const seconds = Math.floor(
+            (difference % (1000 * 60)) /
+            1000
+        );
+
+        animateValue('days', days);
+        animateValue('hours', hours);
+        animateValue('minutes', minutes);
+        animateValue('seconds', seconds);
+
+        document.getElementById('days-label').textContent = "Days";
+        document.getElementById('hours-label').textContent = "Hours";
+        document.getElementById('minutes-label').textContent = "Minutes";
+        document.getElementById('seconds-label').textContent = "Seconds";
+
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // ==================== AFTER WEDDING ====================
+    else {
 
-    animateValue('days', days);
-    animateValue('hours', hours);
-    animateValue('minutes', minutes);
-    animateValue('seconds', seconds);
+        heading.textContent = "We are happily married! ❤️";
+        dateText.textContent = "Celebrating our beautiful journey together";
+
+        // Time elapsed since wedding
+        const marriedDuration = now - weddingDate;
+
+        const days = Math.floor(
+            marriedDuration / (1000 * 60 * 60 * 24)
+        );
+
+        const hours = Math.floor(
+            (marriedDuration % (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+        const minutes = Math.floor(
+            (marriedDuration % (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+        const seconds = Math.floor(
+            (marriedDuration % (1000 * 60)) /
+            1000
+        );
+
+        animateValue('days', days);
+        animateValue('hours', hours);
+        animateValue('minutes', minutes);
+        animateValue('seconds', seconds);
+
+        document.getElementById('days-label').textContent = "Days Married";
+        document.getElementById('hours-label').textContent = "Hours";
+        document.getElementById('minutes-label').textContent = "Minutes";
+        document.getElementById('seconds-label').textContent = "Seconds";
+    }
 }
+
+// Update immediately
+updateCountdown();
+
+// Update every second
+setInterval(updateCountdown, 1000);
 
 function animateValue(id, newValue) {
     const element = document.getElementById(id);
