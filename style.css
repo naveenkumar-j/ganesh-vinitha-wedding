@@ -1575,4 +1575,5 @@ body {
 .copyright-footer {
     color: var(--primary-color); 
     text-decoration: none;
+    font-weight: 500;
 }
